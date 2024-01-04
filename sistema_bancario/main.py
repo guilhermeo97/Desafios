@@ -1,0 +1,52 @@
+menu = print("""
+        Bem vindo ao Sistema Bancário Banrisul
+        [d] depósito
+        [s] saque
+        [e] extrato
+        [q] sair""")
+
+extrato = []
+saldo = 0
+LIMITE_SAQUES_VALOR = 500
+LIMITE_SAQUES_QTD = 3
+num_saques = 1
+
+while True:
+    opcao = input("Digite a opção desejada: ")
+    
+    if opcao == "d":
+        valor_deposito = float(input("Digite o valor que você quer depositar: "))
+        while valor_deposito <= 0:
+            print("Valor inválido, digite um valor maior que R$ 0,00")
+            valor_deposito = float(input("Digite o valor que você quer depositar: "))
+        saldo += valor_deposito
+        valor_extrato = str("Depsósito " + str(valor_deposito))
+        extrato.append(valor_extrato)
+        
+        
+        
+    elif opcao == "s":
+        
+        valor_saque = float(input("Digite o valor que você quer sacar: "))
+        
+        if valor_saque <= 0 or valor_saque > LIMITE_SAQUES_VALOR:
+            print("Valor inválido, digite um valor maior que R$ 0.00 e menor ou igual a R$ 500.00")
+            valor_saque = float(input("Digite o valor que você quer sacar: "))
+        elif valor_saque > saldo:
+            print("Valor de saque maior do que o saldo disponível em conta")
+            valor_saque = float(input("Digite o valor que você quer sacar: "))
+        elif num_saques > LIMITE_SAQUES_QTD:
+            print("Número de saques diários excedido!")
+        else:
+            saldo -= valor_saque
+            valor_extrato = str("Saque " + str(valor_saque))
+            extrato.append(valor_extrato)
+            num_saques += 1
+            
+            
+    elif opcao == "e":
+        for i in extrato:
+            print(i)
+
+    else:
+        break      
