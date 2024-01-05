@@ -46,9 +46,14 @@ while True:
             
     elif opcao == "e":
         print()
-        for i in extrato:
-            print(i)
-        print()
-        print(f"Seu saldo atual é de R$ {saldo:.2f}")
+        if not extrato:
+            print("Não foram realizadas movimentações.")
+            print()
+            print(f"Seu saldo atual é de R$ {saldo:.2f}")
+        else:    
+            for i in extrato:
+                print(i)
+            print()
+            print(f"Seu saldo atual é de R$ {saldo:.2f}")
     else:
         break      
