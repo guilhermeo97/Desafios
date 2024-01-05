@@ -20,7 +20,7 @@ while True:
             print("Valor inválido, digite um valor maior que R$ 0,00")
             valor_deposito = float(input("Digite o valor que você quer depositar: "))
         saldo += valor_deposito
-        valor_extrato = str("Depsósito " + str(valor_deposito))
+        valor_extrato = str("Depsósito " + "R$ {:.2f}".format(valor_deposito))
         extrato.append(valor_extrato)
         
         
@@ -39,14 +39,16 @@ while True:
             print("Número de saques diários excedido!")
         else:
             saldo -= valor_saque
-            valor_extrato = str("Saque " + str(valor_saque))
+            valor_extrato = str("Saque " + "R$ {:.2f}".format(valor_saque))
             extrato.append(valor_extrato)
             num_saques += 1
             
             
     elif opcao == "e":
+        print()
         for i in extrato:
             print(i)
-
+        print()
+        print(f"Seu saldo atual é de R$ {saldo:.2f}")
     else:
         break      
