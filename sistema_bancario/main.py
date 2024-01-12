@@ -11,17 +11,28 @@ LIMITE_SAQUES_VALOR = 500
 LIMITE_SAQUES_QTD = 3
 num_saques = 1
 
+def depositar():
+    global saldo
+    valor_deposito = float(input("Digite o valor que você quer depositar: "))
+    while valor_deposito <= 0:
+        print("Valor inválido, digite um valor maior que R$ 0,00")
+        valor_deposito = float(input("Digite o valor que você quer depositar: "))
+    saldo += valor_deposito
+    valor_extrato = str("Depsósito " + "R$ {:.2f}".format(valor_deposito))
+    extrato.append(valor_extrato)
+
 while True:
     opcao = input("Digite a opção desejada: ")
     
     if opcao == "d":
-        valor_deposito = float(input("Digite o valor que você quer depositar: "))
-        while valor_deposito <= 0:
-            print("Valor inválido, digite um valor maior que R$ 0,00")
-            valor_deposito = float(input("Digite o valor que você quer depositar: "))
-        saldo += valor_deposito
-        valor_extrato = str("Depsósito " + "R$ {:.2f}".format(valor_deposito))
-        extrato.append(valor_extrato)
+        depositar()
+        # valor_deposito = float(input("Digite o valor que você quer depositar: "))
+        # while valor_deposito <= 0:
+        #     print("Valor inválido, digite um valor maior que R$ 0,00")
+        #     valor_deposito = float(input("Digite o valor que você quer depositar: "))
+        # saldo += valor_deposito
+        # valor_extrato = str("Depsósito " + "R$ {:.2f}".format(valor_deposito))
+        # extrato.append(valor_extrato)
         
         
         
