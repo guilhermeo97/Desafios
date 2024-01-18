@@ -1,6 +1,7 @@
 menu = print("""
         Bem vindo ao Sistema Bancário Banrisul
         [c] cadastrar novo cliente
+        [n] cadastrar novo cliente
         [d] depósito
         [s] saque
         [e] extrato
@@ -14,6 +15,7 @@ saldo = 0
 LIMITE_SAQUES_VALOR = 500
 LIMITE_SAQUES_QTD = 3
 num_saques = 1
+
 
 def cadastro_cliente():
     global cadastros_clientes
@@ -78,8 +80,9 @@ def cadastro_cliente():
     print(clientes)
 
 def cadastrar_conta():
+    contas = []
     global cadastros_clientes
-    codigo_conta = str(len(cadastros_clientes) + 1)
+    codigo_conta = str(len(clientes))
     if cadastros_clientes is None:
         print("Não há clientes cadastrdos!")
     else:
@@ -92,7 +95,14 @@ def cadastrar_conta():
         while not usuario_cliente or len(usuario_cliente) <= 3:
             print("O nome de usuário é obrigatório")
             usuario_cliente = input("Digite o nome de usuário do cliente: ")
-        cadastros_clientes[cpf_cliente]   
+        
+        dados_conta = {
+            'cod_conta': codigo_conta,
+            'agencia': '0001',
+            'usuario': usuario_cliente
+        }
+        cadastros_clientes['conta'] = dados_conta
+        print(clientes)
 
     
 
