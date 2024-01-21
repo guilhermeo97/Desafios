@@ -1,13 +1,3 @@
-menu = print("""
-        Bem vindo ao Sistema Bancário Banrisul
-        [c] cadastrar novo cliente
-        [n] cadastrar novo cliente
-        [d] depósito
-        [s] saque
-        [e] extrato
-        [q] sair""")
-
-
 extrato = []
 clientes = []
 cadastros_clientes = {}
@@ -15,10 +5,24 @@ saldo = 0
 LIMITE_SAQUES_VALOR = 500
 LIMITE_SAQUES_QTD = 3
 num_saques = 1
+conta = {}
+contagem_contas = []
+agencia = []
+usuario = []
+
+menu = print("""
+        Bem vindo ao Sistema Bancário Banrisul
+        [c] cadastrar novo cliente
+        [n] cadastrar novo cliente
+        [d] depósito
+        [s] saque
+        [e] extrato
+        [l] listar clientes
+        [q] sair
+        """)
 
 
-def cadastro_cliente():
-    global cadastros_clientes
+def cadastro_cliente(cadastros_clientes):
     if cadastros_clientes is None:
         cpf_cliente = input("Digite o CPF do cliente: ")
         while (len(cpf_cliente) < 11 and len(cpf_cliente) > 14):
@@ -71,47 +75,46 @@ def cadastro_cliente():
         cpf_cliente: {
         'nome': nome_cliente,
         'data_nascimento': dt_nascimento_cliente,
-        'endereco': endereco_unificado_cliente
+        'endereco': endereco_unificado_cliente,
+        'conta': {}
         }
     }
 
     clientes.append(cadastros_clientes)
+    return clientes
 
-    print(clientes)
 
-def cadastrar_conta():
-    contas = []
-    global cadastros_clientes
-    codigo_conta = str(len(clientes))
-    if cadastros_clientes is None:
+def cadastrar_conta(conta, usuario, cadastro_clientes):
+    codigo_conta = str(len(contagem_contas) + 1)
+    if cadastro_clientes is None:
         print("Não há clientes cadastrdos!")
     else:
-        cpf_cliente = input("Digite o CPF do cliente: ")
-        while cpf_cliente not in cadastros_clientes:
+        cpf_cliente_2 = input("Digite o CPF do cliente: ")
+        while cpf_cliente_2 not in cadastro_clientes:
             print("O CPF digitado não foi encontrado")
-            cpf_cliente = input("Digite o CPF do cliente: ")
+            cpf_cliente_2 = input("Digite o CPF do cliente: ")
         
         usuario_cliente = input("Digite o nome de usuário do cliente: ")
-        while not usuario_cliente or len(usuario_cliente) <= 3:
+        while not usuario_cliente or len(usuario_cliente) <= 3 or usuario_cliente in usuario:
             print("O nome de usuário é obrigatório")
-            usuario_cliente = input("Digite o nome de usuário do cliente: ")
+            usuario_cliente = input("Digite o nome de usuário do clientek ")
         
-        dados_conta = {
-            'cod_conta': codigo_conta,
-            'agencia': '0001',
-            'usuario': usuario_cliente
-        }
-        cadastros_clientes['conta'] = dados_conta
+        conta.append(codigo_conta)
+        
+
+        print(conta)
+        cadastros_clientes[cpf_cliente_2]['conta'][codigo_conta] = {'usuario': usuario_cliente, 'agencia': '0001'} 
+
         print(clientes)
 
     
 
 def depositar():
     global saldo
-    valor_deposito = float(input("Digite o valor que você quer depositar: "))
+    valor_deposito = float(input("Digite o valor que você quer depositark "))
     while valor_deposito <= 0:
         print("Valor inválido, digite um valor maior que R$ 0,00")
-        valor_deposito = float(input("Digite o valor que você quer depositar: "))
+        valor_deposito = float(input("Digite o valor que você quer deposktar: "))
     saldo += valor_deposito
     valor_extrato = str("Depsósito " + "R$ {:.2f}".format(valor_deposito))
     extrato.append(valor_extrato)
@@ -119,9 +122,9 @@ def depositar():
 def sacar():
     global saldo
     global num_saques
-    valor_saque = float(input("Digite o valor que você quer sacar: "))    
+    valor_saque = float(input("Digite o valor que você quer sacar: ")) 
     if valor_saque <= 0 or valor_saque > LIMITE_SAQUES_VALOR:
-        print("Valor inválido, digite um valor maior que R$ 0.00 e menor ou igual a R$ 500.00")
+        print("Valor inválido, digite um valor maior que R$ 0.00 e menorkou igual a R$ 500.00")
         valor_saque = float(input("Digite o valor que você quer sacar: "))
     elif valor_saque > saldo:
         print("Valor de saque maior do que o saldo disponível em conta")
@@ -146,6 +149,8 @@ def imprimir_extrato():
             print()
             print(f"Seu saldo atual é de R$ {saldo:.2f}")
 while True:
+    print(clientes)
+    print(cadastros_clientes)
     opcao = input("Digite a opção desejada: ")
     
     if opcao == "d":
@@ -154,10 +159,15 @@ while True:
     elif opcao == "s":
         sacar()
     elif opcao == "c":
-        cadastro_cliente()                 
-        cadastrar_conta()
+        cadastro_cliente(cadastros_clientes)                 
+        cadastrar_conta(contagem_contas, usuario, cadastros_clientes)
     elif opcao == "e":
         imprimir_extrato()
 
+    elif opcao == "n":
+        cadastrar_conta(contagem_contas, usuario, dados)
+    elif opcao == "l":
+        print(clientes)
+    
     else:
         break      
